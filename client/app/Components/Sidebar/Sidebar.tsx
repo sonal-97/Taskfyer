@@ -5,21 +5,30 @@ import { useUserContext } from "@/context/userContext";
 
 function Sidebar() {
   const { logoutUser } = useUserContext();
+
   return (
-    <div
-      className="w-[20rem] mt-[5rem] h-[calc(100%-5rem)] fixed right-0 top-0 bg-[#f9f9f9] flex flex-col overflow-y-auto"
-    >
-      <Profile />
-      <div className="mt-4 mx-6">
-        <RadialChart />
+    // Sidebar Container
+    <div className="w-[20rem] h-screen fixed right-0 top-0 bg-[#f9f9f9] flex flex-col">
+      {/* Scrollable Content Wrapper */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {/* Profile Section */}
+        <Profile />
+
+        {/* Radial Chart Section */}
+        <div className="mt-4">
+          <RadialChart />
+        </div>
       </div>
 
-      <button
-        className="mt-auto mb-6 mx-6 py-4 px-8 bg-[#EB4E31] text-white rounded-[50px] hover:bg-[#3aafae] transition duration-200 ease-in-out"
-        onClick={logoutUser}
-      >
-        Sign Out
-      </button>
+      {/* Fixed Logout Button at the Bottom */}
+      <div className="p-6">
+        <button
+          className="w-full py-4 px-8 bg-[#EB4E31] text-white rounded-[50px] hover:bg-[#3aafae] transition duration-200 ease-in-out"
+          onClick={logoutUser}
+        >
+          Sign Out
+        </button>
+      </div>
     </div>
   );
 }
