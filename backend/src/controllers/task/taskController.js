@@ -3,7 +3,7 @@ import TaskModel from "../../models/tasks/TaskModel.js";
 
 export const createTask = asyncHandler(async (req, res) => {
   try {
-    const { title, description, dueDate, priority, status } = req.body;//what are all the thinigs we will be needing in a new task
+    const { title, description, dueDate, priority, status, startDate, dependencies } = req.body;
     //in a try catch block.
 
     if (!title || title.trim() === "") {//trim the empty spaces at the end of the title.=== for datatype strict matching.
@@ -22,7 +22,9 @@ export const createTask = asyncHandler(async (req, res) => {
       dueDate,
       priority,
       status,
-      user: req.user._id,//this line stores the id of the user who created the task
+      user: req.user._id,
+      startDate,
+      dependencies,
     });
 
     await task.save();
@@ -86,7 +88,7 @@ export const updateTask = asyncHandler(async (req, res) => {//async and await
     const userId = req.user._id;
 
     const { id } = req.params;
-    const { title, description, dueDate, priority, status, completed } =
+    const { title, description, dueDate, priority, status, completed, startDate, dependencies } =
       req.body;
 
     if (!id) {
@@ -111,6 +113,8 @@ export const updateTask = asyncHandler(async (req, res) => {//async and await
     task.priority = priority || task.priority;
     task.status = status || task.status;
     task.completed = completed || task.completed;
+    task.startDate = startDate || task.startDate;
+    task.dependencies = dependencies || task.dependencies;
 
     await task.save();
 

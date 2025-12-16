@@ -18,6 +18,16 @@ const TaskSchema = new mongoose.Schema(
       default: Date.now(),
     },
 
+    startDate: {
+      type: Date,
+      default: Date.now(),
+    },
+
+    dependencies: {
+      type: [{ type: mongoose.Schema.ObjectId, ref: "Task" }],
+      default: [],
+    },
+
     status: {
       type: String,
       enum: ["active", "inactive"],

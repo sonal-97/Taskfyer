@@ -4,7 +4,7 @@ import IconDeleteAll from "@/public/icons/IconDeleteAll";
 import IconFileCheck from "@/public/icons/IconFileCheck";
 import IconGrid from "@/public/icons/IconGrid";
 import IconStopwatch from "@/public/icons/IconStopwatch";
-import { link } from "fs";
+import IconChart from "@/public/icons/IconChart";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -38,7 +38,13 @@ function MiniSidebar() {
       title: "Overdue",
       link: "/overdue",
     },
+    {
+      icon: <IconChart strokeColor={getStrokeColor("/dashboard-gantt")} />,
+      title: "Dashboard",
+      link: "/dashboard-gantt",
+    },
   ];
+
   return (
     <div className="basis-[5rem] flex flex-col bg-[#f9f9f9]">
       <div className="flex items-center justify-center h-[5rem]">
