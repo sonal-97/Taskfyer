@@ -14,7 +14,7 @@ function DashboardGantt() {
 
     const ganttRef = useRef<HTMLDivElement>(null);
 
-    const filteredTasks = tasks.filter((task) => {
+    const filteredTasks = tasks.filter((task: any) => {
         let matchesPriority = true;
         let matchesStatus = true;
 
