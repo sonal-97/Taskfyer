@@ -16,6 +16,14 @@ function Modal() {
   } = useTasks();
   const ref = React.useRef(null);
 
+  // Helper to format date for input[type="date"]
+  const formatDateForInput = (dateVal: string | Date | undefined): string => {
+    if (!dateVal) return "";
+    const d = new Date(dateVal);
+    if (isNaN(d.getTime())) return "";
+    return d.toISOString().split("T")[0]; // Returns YYYY-MM-DD
+  };
+
   // Use the hook to detect clicks outside the modal
   useDetectOutside({
     ref,
@@ -34,11 +42,9 @@ function Modal() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (modalMode === "edit") {
       updateTask(task);
     } else if (modalMode === "add") {
-      console.log("Submitting task:", task); // DEBUG LOG
       createTask(task);
     }
     closeModal();
@@ -94,7 +100,7 @@ function Modal() {
             className="bg-[#F9F9F9] p-2 rounded-md border"
             type="date"
             name="startDate"
-            value={task.startDate || ""} // Ensure controlled input
+            value={formatDateForInput(task.startDate)}
             onChange={(e) => handleInput("startDate")(e)}
           />
         </div>
@@ -104,7 +110,7 @@ function Modal() {
             className="bg-[#F9F9F9] p-2 rounded-md border"
             type="date"
             name="dueDate"
-            value={task.dueDate || ""} // Ensure controlled input
+            value={formatDateForInput(task.dueDate)}
             onChange={(e) => handleInput("dueDate")(e)}
           />
         </div>
