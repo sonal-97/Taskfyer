@@ -10,7 +10,7 @@ interface GanttChartProps {
 }
 
 function GanttChart({ tasks }: GanttChartProps) {
-    const { updateTask } = useTasks();
+    const { updateTask, openModalForEdit } = useTasks();
     const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Day);
     const [ganttTasks, setGanttTasks] = useState<Task[]>([]);
 
@@ -118,6 +118,12 @@ function GanttChart({ tasks }: GanttChartProps) {
                     viewMode={viewMode}
                     onDateChange={handleDateChange}
                     onProgressChange={handleProgressChange}
+                    onDoubleClick={(task) => {
+                        const originalTask = tasks.find(t => t._id === task.id);
+                        if (originalTask) {
+                            openModalForEdit(originalTask);
+                        }
+                    }}
                     listCellWidth="155px"
                     columnWidth={viewMode === ViewMode.Month ? 300 : 65}
                     barBackgroundColor="#dbeafe"

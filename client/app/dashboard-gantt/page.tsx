@@ -4,11 +4,12 @@ import { useTasks } from "@/context/taskContext";
 import GanttChart from "../Components/Gantt/GanttChart";
 import StatisticsPanel from "../Components/Gantt/StatisticsPanel";
 import FilterPanel from "../Components/Gantt/FilterPanel";
+import Modal from "../Components/Modal/Modal";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 
 function DashboardGantt() {
-    const { tasks } = useTasks();
+    const { tasks, modalMode, openModalForAdd, openModalForEdit, activeTask } = useTasks();
     const [filterPriority, setFilterPriority] = useState("all");
     const [filterStatus, setFilterStatus] = useState("all"); // 'all', 'active', 'completed'
 
@@ -75,6 +76,8 @@ function DashboardGantt() {
             <div ref={ganttRef} className="bg-white p-2 rounded shadow-sm border">
                 <GanttChart tasks={filteredTasks} />
             </div>
+
+            {modalMode === "edit" && <Modal />}
         </div>
     );
 }
