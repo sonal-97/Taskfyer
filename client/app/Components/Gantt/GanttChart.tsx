@@ -16,13 +16,27 @@ function GanttChart({ tasks }: GanttChartProps) {
 
     useEffect(() => {
         if (tasks && tasks.length > 0) {
+            console.log("GanttChart received tasks:", tasks); // DEBUG LOG
             const formattedTasks: Task[] = tasks.map((task) => {
-                const start = task.startDate ? new Date(task.startDate) : new Date(task.createdAt);
-                const end = task.dueDate ? new Date(task.dueDate) : new Date(new Date().setDate(new Date().getDate() + 1));
+                // Helper to safely parse date
+                const parseDate = (dateVal: any) => {
+                    if (!dateVal) return null;
+                    const d = new Date(dateVal);
+                    return isNaN(d.getTime()) ? null : d;
+                };
+
+                let start = parseDate(task.startDate) || new Date(task.createdAt);
+                let end = parseDate(task.dueDate) || new Date(new Date().setDate(new Date().getDate() + 1));
+
+                // Normalize times to prevent partial day issues
+                start.setHours(0, 0, 0, 0);
+                end.setHours(23, 59, 59, 999);
 
                 // Ensure end > start
                 if (end <= start) {
-                    end.setTime(start.getTime() + (24 * 60 * 60 * 1000));
+                    end = new Date(start);
+                    end.setDate(start.getDate() + 1);
+                    end.setHours(23, 59, 59, 999);
                 }
 
                 return {

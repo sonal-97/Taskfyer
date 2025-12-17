@@ -38,6 +38,7 @@ function Modal() {
     if (modalMode === "edit") {
       updateTask(task);
     } else if (modalMode === "add") {
+      console.log("Submitting task:", task); // DEBUG LOG
       createTask(task);
     }
     closeModal();
