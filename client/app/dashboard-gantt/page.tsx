@@ -4,12 +4,11 @@ import { useTasks } from "@/context/taskContext";
 import GanttChart from "../Components/Gantt/GanttChart";
 import StatisticsPanel from "../Components/Gantt/StatisticsPanel";
 import FilterPanel from "../Components/Gantt/FilterPanel";
-import Modal from "../Components/Modal/Modal";
 import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
 
 function DashboardGantt() {
-    const { tasks, modalMode, openModalForAdd, openModalForEdit, activeTask } = useTasks();
+    const { tasks } = useTasks();
     const [filterPriority, setFilterPriority] = useState("all");
     const [filterStatus, setFilterStatus] = useState("all"); // 'all', 'active', 'completed'
 
@@ -53,14 +52,14 @@ function DashboardGantt() {
         <div className="p-6 h-full overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
-                    Dashboard & Gantt Chart
+                    Project Timeline Dashboard
                 </h1>
                 <button
                     onClick={handleExport}
                     className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition-all"
                 >
                     <Download size={18} />
-                    Export Chart
+                    Export
                 </button>
             </div>
 
@@ -76,8 +75,6 @@ function DashboardGantt() {
             <div ref={ganttRef} className="bg-white p-2 rounded shadow-sm border">
                 <GanttChart tasks={filteredTasks} />
             </div>
-
-            {modalMode === "edit" && <Modal />}
         </div>
     );
 }
