@@ -31,27 +31,27 @@ const TaskSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["active", "inactive"],
-      default: "active",//focus on default
+      default: "active",
     },
 
-    completed: {//task completed
+    completed: {
       type: Boolean,
       default: false,
     },
 
-    priority: {//of tasks
+    priority: {
       type: String,
       enum: ["low", "medium", "high"],
       default: "low",
     },
 
-    user: {//every task req a user that will use moongose default schema
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
       required: true,
     },
   },
-  { timestamps: true }//for when the task was created
+  { timestamps: true }
 );
 
 const TaskModel = mongoose.model("Task", TaskSchema);

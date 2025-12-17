@@ -6,16 +6,13 @@ export const createTask = asyncHandler(async (req, res) => {
     const { title, description, dueDate, priority, status, startDate, dependencies } = req.body;
     //in a try catch block.
 
-    if (!title || title.trim() === "") {//trim the empty spaces at the end of the title.=== for datatype strict matching.
+    if (!title || title.trim() === "") {
       res.status(400).json({ message: "Title is required!" });
     }
-    //400 meansn client eroor like invalid input
-    //json sends a json response to client.
 
     if (!description || description.trim() === "") {
-      res.status(400).json({ message: "Description is required!" });//res is the response obj provided by express.
+      res.status(400).json({ message: "Description is required!" });
     }
-    // in other properties we already have some default like true false etc. so no need to define them unless req.
     const task = new TaskModel({
       title,
       description,
@@ -36,7 +33,7 @@ export const createTask = asyncHandler(async (req, res) => {
   }
 });
 
-export const getTasks = asyncHandler(async (req, res) => {//its get tasks with a 's' not the same as latter.
+export const getTasks = asyncHandler(async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -44,10 +41,10 @@ export const getTasks = asyncHandler(async (req, res) => {//its get tasks with a
       res.status(400).json({ message: "User not found!" });
     }
 
-    const tasks = await TaskModel.find({ user: userId });//finds all the task user has stored previously.
+    const tasks = await TaskModel.find({ user: userId });
 
-    res.status(200).json({//200 means successfull , ok!
-      length: tasks.length,//will tell the no of tasks we have 2 3 4 etc.
+    res.status(200).json({
+      length: tasks.length,
       tasks,
     });
   } catch (error) {
@@ -56,11 +53,11 @@ export const getTasks = asyncHandler(async (req, res) => {//its get tasks with a
   }
 });
 
-export const getTask = asyncHandler(async (req, res) => {//now we got all the tasks user has stored or updated previously.
-  try { //so now new tasks.
+export const getTask = asyncHandler(async (req, res) => {
+  try {
     const userId = req.user._id;
 
-    const { id } = req.params;//req.params means it req all the route parameters from expree url.from that  here we need id.
+    const { id } = req.params;
 
     if (!id) {
       res.status(400).json({ message: "Please provide a task id" });
@@ -72,7 +69,7 @@ export const getTask = asyncHandler(async (req, res) => {//now we got all the ta
       res.status(404).json({ message: "Task not found!" });
     }
 
-    if (!task.user.equals(userId)) {//since ids are strings we can compare it like strings"equals" word
+    if (!task.user.equals(userId)) {
       res.status(401).json({ message: "Not authorized! to view this task" });
     }
 
@@ -83,7 +80,7 @@ export const getTask = asyncHandler(async (req, res) => {//now we got all the ta
   }
 });
 
-export const updateTask = asyncHandler(async (req, res) => {//async and await
+export const updateTask = asyncHandler(async (req, res) => {
   try {
     const userId = req.user._id;
 

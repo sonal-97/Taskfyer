@@ -6,7 +6,9 @@ import toast from "react-hot-toast";
 const TasksContext = createContext();
 
 // export const serverUrl = "http://localhost:8000/api/v1";
-export const serverUrl = "https://taskfyer-htcr.onrender.com/api/v1";
+export const serverUrl =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  "https://taskfyer-htcr.onrender.com/api/v1";
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
@@ -76,8 +78,6 @@ export const TasksProvider = ({ children }) => {
     try {
       const res = await axios.post(`${serverUrl}/task/create`, task);
 
-      console.log("Task created", res.data);
-
       setTasks([...tasks, res.data]);
       toast.success("Task created successfully");
     } catch (error) {
@@ -135,8 +135,6 @@ export const TasksProvider = ({ children }) => {
   useEffect(() => {
     getTasks();
   }, [userId]);
-
-  console.log("Active tasks", activeTasks);
 
   return (
     <TasksContext.Provider

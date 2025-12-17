@@ -88,12 +88,22 @@ function Modal() {
           </select>
         </div>
         <div className="flex flex-col gap-1">
+          <label htmlFor="startDate">Start Date</label>
+          <input
+            className="bg-[#F9F9F9] p-2 rounded-md border"
+            type="date"
+            name="startDate"
+            value={task.startDate || ""} // Ensure controlled input
+            onChange={(e) => handleInput("startDate")(e)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
           <label htmlFor="dueDate">Due Date</label>
           <input
             className="bg-[#F9F9F9] p-2 rounded-md border"
             type="date"
             name="dueDate"
-            value={task.dueDate}
+            value={task.dueDate || ""} // Ensure controlled input
             onChange={(e) => handleInput("dueDate")(e)}
           />
         </div>
@@ -118,9 +128,8 @@ function Modal() {
         <div className="mt-8">
           <button
             type="submit"
-            className={`text-white py-2 rounded-md w-full hover:bg-blue-500 transition duration-200 ease-in-out ${
-              modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
-            }`}
+            className={`text-white py-2 rounded-md w-full hover:bg-blue-500 transition duration-200 ease-in-out ${modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
+              }`}
           >
             {modalMode === "edit" ? "Update Task" : "Create Task"}
           </button>
